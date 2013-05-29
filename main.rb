@@ -91,6 +91,9 @@ helpers do
   def insurance_lose!(msg)
     session[:bankroll] -= session[:insurance_show].to_i
     @insurance_message_lose = "#{msg} you #{session[:insurance_show].to_i}"
+    if session[:bankroll] <= 0
+      redirect '/game/out_of_cash'
+    end
   end
 
   def dealer_turn
@@ -159,15 +162,12 @@ get '/game' do
 
   session[:dealer_cards] = []
   session[:player_cards] = []
-  
   session[:dealer_cards] << session[:deck].pop
   session[:player_cards] << session[:deck].pop
   session[:dealer_cards] << session[:deck].pop
   session[:player_cards] << session[:deck].pop
-  
-
   session[:dealer_show] = true
-  session[:insurance_show] = nil #TODO uses this on game.erb
+  session[:insurance_show] = nil
   
 
   redirect '/game/action'
@@ -279,6 +279,10 @@ post '/game/insurance' do
 end
 
 post '/game/deal' do
+  if session[:bankroll] <= 0
+    redirect '/game/out_of_cash'
+  end
+
   if params[:deal] == "Deal"
     if params[:bet_amount].nil? || params[:bet_amount].to_i == 0
       @error = "#{session[:player_name]}, you must make bet."
@@ -298,8 +302,7 @@ post '/game/deal' do
 end
 
 get '/game/quit' do
-
-  "Player quit"
+  erb :quit
 end
 
 get 'shuffle' do
@@ -308,4 +311,8 @@ end
 
 get 'cut_cards' do
 
+end
+
+get '/game/out_of_cash' do
+  erb :out_of_cash
 end
