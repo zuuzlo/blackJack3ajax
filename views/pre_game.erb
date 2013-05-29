@@ -1,0 +1,24 @@
+
+<div class="well well-large">
+  <h4>Rules</h4>
+  <ul>
+    <li>Single deck of 52 cards is used, which is shuffled prior to dealing the first hand.  The same deck is used until 10 or less cards are left after a hand.  Then cards are shuffled and used as above.</li>
+    <li>If the dealer has an ace showing, the player can buy insurance for a dealers blackjack. The insurance bet will pay the player 2 to 1 if the dealer has Blackjack.</li>
+   <li>Dealer hits on anything below 17 and soft 17's.</li>
+    <li>The player can not beat a dealer 2 card blackjack but the player can tie a dealer blackjack with a 2 card blackjack.</li>
+    <li>The player can't lose on a 2 card blackjack but the dealer can tie the player with a two card blackjack.</li>
+    <li>The player can double down on the first two cards only.</li>
+    <li>If the player bank roll is 0 the game is over.  Press the New Game menu button to refresh your bankroll.</li>
+  </ul>
+</div>
+
+<!-- game status -->
+<div class="alert alert-info"><%= session[:player_name] %>, your bank roll is <%= session[:bankroll] %>. Please enter your first hands bet below.</div>
+
+<!-- game interface -->
+<div class='form-inline'>
+  <form action='/pre_game' method='post'>
+    <input type='text' class='input-mini' placeholder='Enter Bet...' name='bet_amount' />
+    <input type='submit' class='btn btn-primary' value='Deal' />
+  </form>
+</div>

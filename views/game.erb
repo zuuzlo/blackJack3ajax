@@ -1,0 +1,91 @@
+<div id='game'>
+<!-- Dealers Cards -->
+<table class='table cards'>
+<tr>
+  <td class='player'> Dealer's cards: 
+    <% if @dealer_total %>
+        Dealer Total: <%= @dealer_total %>
+    <% end %>
+
+  </td>
+  <% if session[:dealer_show] %>
+    <td class='dealer_show'><%= card_img(session[:dealer_cards][0]) %><img src='/images/cards2/b1pr.png'/></td>
+  <% else %>
+    <% session[:dealer_cards].each do |card| %>
+      <td class='card'><%= card_img(card) %></td>
+    <% end %>  
+  <% end %>
+  <td class='last'> </td>
+</tr>
+</table>
+<!-- Dealers Cards End -->
+<!-- Players Cards -->
+<table class='table cards'>
+<tr>
+  <td class='player'><%= session[:player_name] %>'s cards: Bankroll: <%= session[:bankroll] %><br> Bet: <%= session[:player_bet] %><br>
+    <% if session[:insurance_show] %>
+      Insurance: <%= session[:insurance_show] %>
+    <% end %>
+    <% if @player_total %>
+        Hand Total: <%= @player_total %>
+    <% end %>
+  </td>
+  <% session[:player_cards].each do |card| %>
+    <td class='card'><%= card_img(card) %></td>
+  <% end %>
+    <td class='last'> </td>
+</tr>
+</table>
+<!-- Players Cards End -->
+
+<div id='player_message'>
+  <% if @play_message %>
+    <div class='alert alert-info'><%= @play_message %></div>
+  <% elsif @win_message %>
+    <div class="alert alert-success"><%= @win_message %></div>
+  <% elsif @lose_message %>
+    <div class="alert alert-error"><%= @lose_message %></div>
+  <% elsif @tie_message %>
+    <div class="alert alert-warning"><%= @tie_message %></div>
+  <% end %>
+
+  <%if @insurance_message_win %>
+    <div class="alert alert-success"><%= @insurance_message_win %></div>
+  <% end %>
+  <%if @insurance_message_lose %>
+    <div class="alert alert-success"><%= @insurance_message_lose %></div>
+  <% end %>
+</div>
+
+<!--<div id='player_controls'>-->
+<% if @show_hit_or_stay_buttons %>
+  <div class='form-inline'>
+  <form id="hit_form" class="pull-left mglt" action="/game/player/hit" method='post'>
+    <input type="submit" class="btn btn-success" value="Hit" />
+  </form>
+  <form id="stay_form" class="pull-left mglt" action="/game/dealer/hit" method='post'>
+    <input type="submit" class="btn btn-warning mglt" value="Stay" />
+  </form>
+  <% if session[:player_cards].size == 2 && session[:dealer_cards].size == 2 %>
+    <form id="dd_form" class="pull-left mglt" action="/game/dealer/hit" method='post'>
+    <input type="submit" class="btn btn-primary mglt" value="Double Down" name='double_down' />
+    </form>
+  <% end %>
+  </div>
+<% elsif @show_insurance_bet %>
+  <div class='form-inline'>
+  <form action='/game/insurance' method='post'>
+    <input type='text' class='input-mini' placeholder='Amount...' name='insurance_amount' /><span class="help-inline"><%= session[:player_name] %>, enter amount of insurance you would like.</span>
+    <input type='submit' class='btn btn-primary' value='Buy Insurance' name />
+    <input type='submit' class='btn btn-primary' value='No Thanks' name='no_insurance' />
+  </form></div>
+<% else %>
+  <div class='form-inline'>
+  <form action='/game/deal' method='post'>
+    <input type='text' class='input-mini' placeholder='Enter Bet...' name='bet_amount' />
+    <input type='submit' class='btn btn-primary' value='Deal' name='deal' />
+    <input type='submit' class='btn btn-danger' value='Quit'  />
+  </form>
+</div>
+<% end %>
+</div>

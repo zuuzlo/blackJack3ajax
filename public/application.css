@@ -1,0 +1,30 @@
+td.player {
+  width:110px;
+}
+
+td.card {
+  width:65px;
+}
+
+td.last {
+  width:auto;
+}
+
+td.dealer_show{
+  width:100px;
+}
+
+table.cards {
+  width:75%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+img.card {
+  width: auto;
+  height: auto;
+}
+
+.mglt {
+  margin-left: 4px;
+}
