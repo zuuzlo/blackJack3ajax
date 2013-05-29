@@ -186,13 +186,10 @@ get '/game/action' do
     if session[:insurance_show].to_i != 0
       insurance_win!("Your insurance bet wins") #TODO correct message
       loser!("Dealer has Blackjack, ") 
-      @show_hit_or_stay_buttons = false
-    else
+          else
       loser!("Dealer has Blackjack, ")
-      @show_hit_or_stay_buttons = false
-    end
+          end
   elsif player_total == 21
-    @show_hit_or_stay_buttons = false
     session[:player_bet] *= 1.5 #so player gets 1.5 x bet for blackjack
     winner!("You have <strong>BLACKJACK</strong> ")
   else
@@ -303,4 +300,12 @@ end
 get '/game/quit' do
 
   "Player quit"
+end
+
+get 'shuffle' do
+
+end
+
+get 'cut_cards' do
+
 end

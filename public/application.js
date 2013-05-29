@@ -34,7 +34,8 @@ function player_dd() {
   $(document).on("click", "form#dd_form input", function() {
     $.ajax({
       type: "POST",
-      url: "/game/player/dd",
+      url: "/game/dealer/hit",
+      data: {'double_down' : "Double Down"},
     }).done(function(msg) {
       $("#game").replaceWith(msg)
     });
